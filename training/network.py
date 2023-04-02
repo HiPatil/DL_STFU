@@ -5,7 +5,7 @@ class AudioClassifier(nn.Module):
     def __init__(self):
         super().__init__()
 
-        self.conv1 = nn.Conv2d(2, 8, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
+        self.conv1 = nn.Conv2d(1, 8, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
         self.relu1 = nn.ReLU()
         self.bn1 = nn.BatchNorm2d(8)
 
@@ -23,7 +23,7 @@ class AudioClassifier(nn.Module):
 
         # Linear classifier
         self.avg_pool = nn.AdaptiveAvgPool2d(output_size = 1)
-        self.fc = nn.Linear(64, 10)
+        self.fc = nn.Linear(64, 1)
 
     def forward(self, x):
         x = self.conv1(x)
