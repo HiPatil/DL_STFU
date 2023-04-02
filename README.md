@@ -15,7 +15,7 @@ labeled_augmented.csv is the current (as of 3/25/23) text data set. Column 0 is 
 # Himanshu
 03/12: Literature survey [Paper](https://ieeexplore.ieee.org/document/9900333)
 
-04/02: Build a network and training pipeline for model training
+04/02: Build a network and training pipeline for model training, contained in the training directory
 
 # Nick:
 
