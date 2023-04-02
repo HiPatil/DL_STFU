@@ -1,7 +1,10 @@
 import argparse
 import torch
+from training import train
 
 def main(args):
+    
+    train(model, trainloader, args)
 
 
 if __name__ == '__main__':
