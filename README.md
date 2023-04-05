@@ -18,6 +18,9 @@ labeled_augmented.csv is the current (as of 3/25/23) text data set. Column 0 is 
 04/02: Build a network and training pipeline for model training, contained in the training directory
 
 # Nick:
+4/1- Have built out the threadpool to handle multithreading for the text to speech API calls. Each row of labeled_aumented.csv is submitted as a job to the thread pool, where the text is submitted to the Google Text-to-Speech API to generate a .wav file.
+
+4/3- Ran the multithreading to generate 212,000 .wav files. Since Colab provides only 2 vCPUs, I was only able to run 2 threads so this took a long time (~5 requests per second x 60 seconds per minute x 60 minutes per hour = ~18,000 results per hour). Next time would be worth running on the SCC to get a machine that would be able to use 32 threads.
 
 # Krishna:
 
