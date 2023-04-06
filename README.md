@@ -30,6 +30,6 @@ Literature Survey:
  [Paper](https://arxiv.org/abs/2207.03331)
 2. Wake Word Detection with Streaming Transformers [Paper](https://arxiv.org/abs/2102.04488)
 
-4/3: Built a simple rnn architecture.
+4/3: Built a simple rnn architecture, so that we can compare the cnn to rnn model.
 
-4/5: Modified the exists scripts to import rnn model and created a jupter notebook with training pipeline. 
+4/5: Modified the existing scripts to import rnn model and created a jupyter notebook with training pipeline. 
