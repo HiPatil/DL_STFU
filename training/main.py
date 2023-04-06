@@ -4,6 +4,7 @@ from training import train
 import pandas as pd
 from dataloader import get_dataloader
 from network import AudioClassifier
+from rnn import RNN
 import sys
 sys.path.append('/home/himanshu/STFU/')
 print(sys.path)
@@ -20,6 +21,9 @@ def main(args):
 
     trainloader = get_dataloader(df_loader, args.batch_size, args.input_time_steps, args.right_trim_time_steps)
 
+    #uncomment the below train rnn
+    #input_size = 100 #input size for the rnn
+    #model = RNN(input_size).to(device) 
     model = AudioClassifier().to(args.device)
 
     train(model, trainloader, args)
