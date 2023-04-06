@@ -1,6 +1,8 @@
 # DL_STFU
 Real time audio censoring for BU Deep Learning Spring 2023
 
+Dataset: [Drive](https://drive.google.com/drive/folders/1fCVkjPTNFxRuT2trkHi7Q7p0KZ-Uv0DY)
+
 # Dallin:
 pipeline_trial.ipynb is a proof of concept for the data pipeline.  it takes text, passes it to the google text to speach api, and turns that into a spectrogram in numpy, which can then be fed to a neural network.
 
@@ -22,5 +24,12 @@ labeled_augmented.csv is the current (as of 3/25/23) text data set. Column 0 is 
 
 4/3- Ran the multithreading to generate 212,000 .wav files. Since Colab provides only 2 vCPUs, I was only able to run 2 threads so this took a long time (~5 requests per second x 60 seconds per minute x 60 minutes per hour = ~18,000 results per hour). Next time would be worth running on the SCC to get a machine that would be able to use 32 threads.
 
-# Krishna:
+# Krishna Adithya:
+Literature Survey: 
+1. Low-resource Low-footprint Wake-word Detection using Knowledge Distillation
+ [Paper](https://arxiv.org/abs/2207.03331)
+2. Wake Word Detection with Streaming Transformers [Paper](https://arxiv.org/abs/2102.04488)
 
+4/3: Built a simple rnn architecture.
+
+4/5: Modified the exists scripts to import rnn model and created a jupter notebook with training pipeline. 
