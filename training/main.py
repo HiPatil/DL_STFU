@@ -4,26 +4,13 @@ from training import train
 import pandas as pd
 from dataloader import get_dataloader
 from network import AudioClassifier
-from rnn import RNN
 import sys
 sys.path.append('/home/himanshu/STFU/')
-print(sys.path)
+# print(sys.path)
 
 def main(args):
-    file_list = ['/home/himanshu/STFU/data/en-US_3AC0C8Z3HA_0_True.wav'
-          ,'/home/himanshu/STFU/data/en-US_U6FL7NSHUY_1_True.wav'
-          ,'/home/himanshu/STFU/data/en-US_XP64HR8BAN_2_False.wav'
-          ,'/home/himanshu/STFU/data/en-US_PCALFJPAAU_3_True.wav'
-          ,'/home/himanshu/STFU/data/en-US_W1998PGPS2_4_True.wav']
-    file_id = [0,1,2,3,4] #corresponds to the file list id.  this is redundancy babay
-    file_label = [True,True, False, True, True] #ditto
-    df_loader = pd.DataFrame(list(zip(file_list,file_label)), index = file_id, columns = ['file_name','label'])
+    trainloader = get_dataloader(args.data, args.batch_size, args.n_workers, args.input_time_steps, args.right_trim_time_steps)
 
-    trainloader = get_dataloader(df_loader, args.batch_size, args.input_time_steps, args.right_trim_time_steps)
-
-    #uncomment the below train rnn
-    #input_size = 100 #input size for the rnn
-    #model = RNN(input_size).to(device) 
     model = AudioClassifier().to(args.device)
 
     train(model, trainloader, args)
@@ -31,8 +18,10 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='STFU model training')
+    parser.add_argument('--data', type=str, default='Data', help='Data Directory')
     parser.add_argument('--epochs', type=int, default=10, help='Number of epochs to train')
-    parser.add_argument('--batch_size', type=int, default=2, help='Batch size')
+    parser.add_argument('--batch_size', type=int, default=16, help='Batch size')
+    parser.add_argument('--n_workers', type=int, default=16, help='Number of workers')
     parser.add_argument('--lr', type=float, default=0.001, help='Learning rate')
     parser.add_argument('--momentum', type=float, default=0.9, help='Momentum')
     parser.add_argument('--weight_decay', type=float, default=0.0001, help='Weight decay')
