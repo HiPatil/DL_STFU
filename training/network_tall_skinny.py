@@ -9,7 +9,7 @@ class TallSkinny(nn.Module):
 
         self.conv1 = nn.Conv2d(1, 16, kernel_size=(129, 1), stride = 1, padding= 0) #dallin thinks more channels here is better.
         self.relu1 = nn.ReLU() #debate me 
-        self.bn1 = nn.BatchNorm2d(8) #don't pool
+        self.bn1 = nn.BatchNorm2d(16) #don't pool
 
         self.conv2 = nn.Conv2d(16, 32, kernel_size=(1, 3), stride= 1, padding= 0)
         self.relu2 = nn.ReLU()
@@ -64,14 +64,13 @@ class TallSkinny_2(nn.Module):
     def __init__(self):
         super().__init__()
 
-        self.conv1a = nn.Conv2d(1, 4, kernel_size=(129, 1), stride = 1, padding=same) #we think we only left pad, these need to
-        self.conv1b = nn.Conv2d(1, 4, kernel_size=(129, 3), stride = 1, padding=same) #be 
-        self.conv1c = nn.Conv2d(1, 4, kernel_size=(129, 5), stride = 1, padding=same)
-        self.conv1d = nn.Conv2d(1, 4, kernel_size=(129, 10), stride = 1, padding=same)
-        
+        self.conv1a = nn.Conv2d(1, 4, kernel_size=(129, 1), stride = 1 ) #we think we only left pad, these need to
+        self.conv1b = nn.Conv2d(1, 4, kernel_size=(129, 3), stride = 1) #be 
+        self.conv1c = nn.Conv2d(1, 4, kernel_size=(129, 5), stride = 1)
+        self.conv1d = nn.Conv2d(1, 4, kernel_size=(129, 10), stride = 1)
         
         self.relu1 = nn.ReLU() #debate me 
-        self.bn1 = nn.BatchNorm2d(8) #don't pool
+        self.bn1 = nn.BatchNorm2d(16) #don't pool
 
         self.conv2 = nn.Conv2d(16, 32, kernel_size=(1, 3), stride= 1, padding= 0)
         self.relu2 = nn.ReLU()
@@ -93,8 +92,18 @@ class TallSkinny_2(nn.Module):
 
     def forward(self, x):
         
-        ##pad these here, then concatenate
-        x = torch.cat((self.conv1a, self.conv1b, self.conv1c, self.conv1d), 2) #concat over channnel. 
+        a = self.conv1a(x)
+        b = self.conv1b(x)
+        b = nn.functional.pad(b,(2,0),value = 0) #these numbers depend on the size of the convolution
+        
+        c = self.conv1c(x)
+        c = nn.functional.pad(c,(4,0),value = 0)
+        
+        d = self.conv1d(x)
+        d = nn.functional.pad(d,(9,0),value = 0)
+    
+        x = torch.cat((a, b, c, d), 1) #concat over channnel.
+        
         x = self.relu1(x)
         x = self.bn1(x)
 
