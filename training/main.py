@@ -53,7 +53,7 @@ if __name__ == '__main__':
     parser.add_argument('--save_model_dir', type=str, default='models', help='Directory to save model')
     parser.add_argument('--save_model_name', type=str, default='model', help='Name to save model')
     parser.add_argument('--input_time_steps', type=int, default=100, help='Number of time steps to use as input')
-    parser.add_argument('--right_trim_time_steps', type=int, default=1, help='Number of time steps to trim off the end of the spectrogram')
+    parser.add_argument('--right_trim_time_steps', type=int, default=15, help='Number of time steps to trim off the end of the spectrogram')
     parser.add_argument('--identifier', type=str, default='tall_skinny', help='Identifier for wandb')
     parser.add_argument('--wandb', type=int, default=0, help='Use wandb')
     parser.add_argument('--model', type=str, choices=['Normal', 'TallSkinny', 'TallSkinny-v2'])
