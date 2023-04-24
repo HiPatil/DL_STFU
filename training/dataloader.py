@@ -33,6 +33,7 @@ class CustomDataset(Dataset):
             spectrogram = np.concatenate([pad_zeros,spectrogram], axis = 1)
         
         data = torch.from_numpy(spectrogram[:,-self.input_time_steps:]) #the value for time steps is the last x.  20 time steps means last 20
+        data = data/data.max()
         return data.unsqueeze(0), label
     
 def get_dataloader(path, batch_size, num_workers, input_time_steps,right_trim_time_steps):
