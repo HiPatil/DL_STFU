@@ -24,7 +24,8 @@ class CustomDataset(Dataset):
         sample_rate, samples = wavfile.read(os.path.join(self.path, file_name))
         _, _, spectrogram = signal.spectrogram(samples, sample_rate)
         # print(spectrogram.shape)
-        spectrogram = spectrogram[:,:-self.right_trim_time_steps] #this is how many to shave off the end. 
+        right_trim = np.random.ranint(low=0, high=self.right_trim_time_steps)
+        spectrogram = spectrogram[:,:-right_trim] #this is how many to shave off the end. 
         spec_height,spec_t = spectrogram.shape
         if spec_t < self.input_time_steps:
             pad_width = self.input_time_steps - spec_t 
@@ -33,6 +34,7 @@ class CustomDataset(Dataset):
             spectrogram = np.concatenate([pad_zeros,spectrogram], axis = 1)
         
         data = torch.from_numpy(spectrogram[:,-self.input_time_steps:]) #the value for time steps is the last x.  20 time steps means last 20
+        data = data/data.max()
         return data.unsqueeze(0), label
     
 
