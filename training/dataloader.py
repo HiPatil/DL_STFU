@@ -37,5 +37,11 @@ class CustomDataset(Dataset):
     
 def get_dataloader(path, batch_size, num_workers, input_time_steps,right_trim_time_steps):
     dataset = CustomDataset(path,input_time_steps,right_trim_time_steps)
-    dataloader = DataLoader(dataset, batch_size=batch_size, num_workers = num_workers, shuffle=True)
-    return dataloader
+    train_size = int(0.8*len(dataset))
+    val_size = len(dataset) - train_size
+    train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
+
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, num_workers = num_workers, shuffle=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, num_workers = num_workers, shuffle=True)
+
+    return train_dataloader, val_dataloader
