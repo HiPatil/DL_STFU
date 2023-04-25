@@ -24,7 +24,13 @@ class CustomDataset(Dataset):
         sample_rate, samples = wavfile.read(os.path.join(self.path, file_name))
         _, _, spectrogram = signal.spectrogram(samples, sample_rate)
         # print(spectrogram.shape)
-        right_trim = np.random.ranint(low=0, high=self.right_trim_time_steps)
+        
+        if label == 0:
+            ##if it is false, that random number can be bigger..
+            right_trim = np.random.randint(low=1, high=self.right_trim_time_steps*5)
+        else:
+            right_trim = np.random.randint(low=1, high=self.right_trim_time_steps)
+
         spectrogram = spectrogram[:,:-right_trim] #this is how many to shave off the end. 
         spec_height,spec_t = spectrogram.shape
         if spec_t < self.input_time_steps:
